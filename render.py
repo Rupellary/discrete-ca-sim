@@ -1,0 +1,1 @@
+# Code for rendering the simulation in the terminal
