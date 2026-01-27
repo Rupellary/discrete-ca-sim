@@ -46,4 +46,5 @@ The team has agreed on feature priorities. If a team member is sick or otherwise
 Team members must do their best to anticipate potential hurdles that may bar them from contributing what they have committed to contributing and notify the team as much in advance as possible.
 Team members should be understanding of the complexity of one another’s lives and be prepared to adapt to changing circumstances. 
 
-
+## Git Branch Plan:
+Branches will be created for each feature, tied to it's corresponding issue. Merges to main will be made with pull requests that tie them to the issue they resolve. If a feature is best managed by decomposing it into sub-issues, the feature will still be merged as a whole but all sub-issues will be tagged in the pull request. These rules may be adapted if problems arise from feature interdependency. 
