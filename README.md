@@ -30,3 +30,20 @@ Time zone and work-schedule differences make rapid communication and collective 
 As a data science teacher, I’ve come to feel most comfortable working in a jupyter notebook where rapid iteration feels easiest, but notebooks don’t mesh well with Git. I will need to adapt and get more comfortable iterating with terminal outputs to make collaboration with Git cleaner.
 I also have less experience with object-oriented programming and the shell, but as it makes sense to approach it this way I will have to get more comfortable with this setup. 
 In order to effectively collaborate we will both have to step out of our comfort zones to meet each other somewhere where we can both work effectively.
+
+## Communication Plan:
+(While I will not be working in a team, I can answer as though I were in order to engage with the concept)
+Communication will take place largely through slack and via comments in the code. While we will set up certain rules around who has the authority to edit what, these rules will need to be flexible to accommodate urgent situations where the asynchronous communication makes timely authorization impossible.
+If we notice issues in one another’s code, we will create issues on GitHub but will not alter each other’s code unless it is necessary in order to test our own. Pull requests will be made such that the alterations can be clearly tracked and aren’t merged or committed directly to main. Explanation of the issue should be as thorough and clear as possible to avoid misunderstanding when clarifying questions are not an option due to time-differences. 
+Each team member is in charge of 1-3 features, only they can authorize pull requests regarding those features. 
+Each feature and fix will get its own branch for clear version tracking. 
+If someone creates a new branch, especially one solving a bug in another team member’s code, they should notify the team on slack to allow others to use those edits as well while waiting for the feature owner to review and/or revise the fix.
+Team members should notify one another via slack when a fix or feature has been merged to main. 
+Team members will comment their code as thoroughly as possible to accommodate the variety of levels-of-familiarity with the tools among the team members. Team-teaching comments can be distinguished from comments that will be included in the final version by this flag: # [to team] commentcommentcomment
+### Contingency Plan for Team Member Unavailability:
+(While I will not be working in a team, I can answer as though I were in order to engage with the concept)
+The team has agreed on feature priorities. If a team member is sick or otherwise unable to complete a high-priority feature, another team member with a lower-priority feature should pause their work to volunteer to take over and make sure they notify everyone on slack before they begin working on the feature. 
+Team members must do their best to anticipate potential hurdles that may bar them from contributing what they have committed to contributing and notify the team as much in advance as possible.
+Team members should be understanding of the complexity of one another’s lives and be prepared to adapt to changing circumstances. 
+
+
