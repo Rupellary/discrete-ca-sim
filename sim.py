@@ -44,7 +44,8 @@ class CellularAutomata:
         neighbor_counts: np.ndarray = convolve2d(
             self.grid_state, 
             neighbor_count_kernel, 
-            mode='same' #removes the extra rows and columns that would result from a proper convolution
+            mode='same', #removes the extra rows and columns that would result from a proper convolution
+            boundary='wrap'
         )
         return neighbor_counts
 
