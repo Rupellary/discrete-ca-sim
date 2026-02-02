@@ -1,5 +1,6 @@
 # Code for running the simulation
 import numpy as np
+from scipy import convolve2d
 
 class CellularAutomata:
     """
@@ -27,14 +28,20 @@ class CellularAutomata:
         self.survive_set = survive_set
         self.birth_set = birth_set
 
-    def count_neighbors(self):
+    def _count_neighbors(self):
+        """
+        Counts number of active neighbors in the 3x3 neighborhood around each cell.
+        Returns a grid of the same size with each cells' count of active neighbors. 
+        """
         neighbor_count_kernel: np.ndarray = np.array([
             [1, 1, 1],
             [1, 0, 1],
             [1, 1, 1]
         ])
-        pass
+        neighbor_counts: np.ndarray = convolve2d(self.grid_state, neighbor_count_kernel, mode='same')
+        return neighbor_counts
 
 
     def update_rule(self):
-        pass
+        neighbor_counts = self._count_neighbors()
+        
