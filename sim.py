@@ -27,5 +27,14 @@ class CellularAutomata:
         self.survive_set = survive_set
         self.birth_set = birth_set
 
+    def count_neighbors(self):
+        neighbor_count_kernel: np.ndarray = np.array([
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ])
+        pass
+
+
     def update_rule(self):
         pass
