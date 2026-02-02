@@ -1,6 +1,6 @@
 # Code for CLI with app, parsing command and running sim and viz
 import numpy as np
-from render import display_grid_state
+from render import render_rollout
 from sim import CellularAutomata
 import typer
 import re
@@ -44,7 +44,7 @@ def main(
     # Checking that rule string is in valid format
     assert re.match(string=rule_string, pattern=r"^S\d+B\d+$"), """
         Not a valid rule string. 
-        Must follow the pattern 'S_B_' with underscores replaced with digits. 
+        Must follow the pattern "S_B_" with underscores replaced with digits. 
         No other characters are allowed.
     """
     
@@ -61,11 +61,8 @@ def main(
         birth_set=birth_set
     )
 
-    # Rollout and display CA [NOTE: this will be replaced by render_rollout()]
-    display_grid_state(ca.grid_state)
-    for _ in range(steps):
-        ca.step()
-        display_grid_state(ca.grid_state)      
+    # Rollout and display
+    render_rollout(ca=ca, steps=steps)  
 
 
 if __name__ == "__main__":
