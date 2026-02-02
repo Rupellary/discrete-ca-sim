@@ -1,6 +1,6 @@
 # Code for running the simulation
 import numpy as np
-from scipy import convolve2d
+from scipy.signal import convolve2d
 
 class CellularAutomata:
     """
@@ -20,8 +20,8 @@ class CellularAutomata:
     def __init__(
         self,
         grid_state: np.ndarray,
-        survive_set: set,
-        birth_set: set,
+        survive_set: set = {2, 3},
+        birth_set: set = {3},
     ):
         self.grid_state = grid_state
         self.survive_set = survive_set
