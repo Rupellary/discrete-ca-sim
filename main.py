@@ -22,7 +22,7 @@ app = typer.Typer()
 @app.command()
 def main(
     steps: int = typer.Option(
-        default=3,
+        default=5,
         help="""
             Number of steps in the rollout
         """
@@ -38,7 +38,7 @@ def main(
     )
 ):
     """
-    Example Command: $ python main.py --rule-string S23B3
+    Example Command: $ python main.py --steps 10 --rule-string S23B3
     """
 
     # Checking that rule string is in valid format
@@ -49,7 +49,7 @@ def main(
     """
     
     # Extract substrings for S and B
-    survive_str, birth_str = re.findall(string = rule_string, pattern=r"^S(\d+)B(\d+)$")[0]
+    survive_str, birth_str = re.findall(string=rule_string, pattern=r"^S(\d+)B(\d+)$")[0]
     # Convert to sets of integers
     survive_set = set(map(int, survive_str))
     birth_set = set(map(int, birth_str))
@@ -60,14 +60,13 @@ def main(
         survive_set=survive_set,
         birth_set=birth_set
     )
-    print(ca.survive_set)
-    print(ca.birth_set)
 
-    # Rollout and display CA
+    # Rollout and display CA [NOTE: this will be replaced by render_rollout()]
     display_grid_state(ca.grid_state)
     for _ in range(steps):
         ca.step()
         display_grid_state(ca.grid_state)      
+
 
 if __name__ == "__main__":
     app()
