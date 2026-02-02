@@ -1,7 +1,7 @@
-# Code for CLI with app, parsing command and running sim and viz
+from sim import CellularAutomaton
+
 import numpy as np
 from render import render_rollout
-from sim import CellularAutomata
 import typer
 import re
 
@@ -55,7 +55,7 @@ def main(
     birth_set = set(map(int, birth_str))
 
     # Initialize CA
-    ca = CellularAutomata(
+    ca = CellularAutomaton(
         grid_state=test_state,
         survive_set=survive_set,
         birth_set=birth_set

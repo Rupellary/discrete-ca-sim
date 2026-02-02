@@ -1,9 +1,9 @@
-# Code for rendering the simulation in the terminal
+from sim import CellularAutomaton
+
 import numpy as np
 from typing import Dict, Any
 from rich.live import Live
 from rich.text import Text
-from sim import CellularAutomata
 import time
 
 
@@ -57,7 +57,7 @@ def _render_state(
 
 
 def render_rollout(
-    ca: CellularAutomata,
+    ca: CellularAutomaton,
     steps: int,
     seconds_per_step: float = 0.6
 ) -> None:
@@ -66,8 +66,8 @@ def render_rollout(
     
     Parameters
     ----------
-    ca : CellularAutomata
-        Cellular automaton with grid state and update rule.
+    ca : CellularAutomaton
+        Cellular automaton grid state and update rule.
     steps : int
         Number of steps to rollout the CA in the animation.
     seconds_per_step : float

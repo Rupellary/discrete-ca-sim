@@ -1,10 +1,9 @@
-# Code for running the simulation
 import numpy as np
 from scipy.signal import convolve2d
 
-class CellularAutomata:
+class CellularAutomaton:
     """
-    Cellular automata, including grid as an attribute and update rule as a method.
+    Cellular automaton, including grid state as an attribute and update rule as a method.
     Updates states based on the count of living neighbors.
 
     Attributes
