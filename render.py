@@ -73,22 +73,23 @@ def _render_state(
     # Compute line length to know how many characters to have in the first row
     line_length: int = (row_len * cell_len) + sep_len
     # Concatenate underscores into "roof" of grid (" " between cells, "_" over them)
-    grid_roof: str = (" " + "_"*state_len)*row_len
+    grid_roof: str = (" " + "_"*state_len)*int(line_length/sep)
     # Add roof to state string
-    state_string += grid_roof 
+    lines = [grid_roof] 
 
     # --- Displaying Matrix ---
     # Loop through rows in the grid
     for row in grid_state:
-        # Add a line break to start next row
-        state_string += "\n"
         # Convert numbers into symbols from the symbols dict for displaying
         line: list[str] = [symbols[cell] for cell in row]
         # Concatenate cell symbols with separator
         line: str = sep + sep.join(line) + sep
-        # Add row to state string
-        state_string += line
+        # Add row to list of lines
+        lines.append(line)
     
+    # Combine lines together with line breaks between
+    state_string = "\n".join(lines)
+
     # Add final line break to give visual a bit of space from the bottom of the terminal
     state_string += "\n"
 
