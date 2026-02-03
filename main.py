@@ -1,19 +1,10 @@
 from sim import CellularAutomaton
+from render import render_rollout
+from starting_states import get_start, start_options_desc
 
 import numpy as np
-from render import render_rollout
 import typer
 import re
-
-# Hypothetical grid state to be used for various test
-test_state: np.array = np.array([
-    [0, 0, 0, 0, 0, 1],
-    [1, 1, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [1, 1, 0, 0, 0, 0]
-])
 
 
 # [to team] working off of Typer Docs: https://typer.tiangolo.com/tutorial/arguments/optional/#an-alternative-cli-argument-declaration
@@ -35,34 +26,48 @@ def main(
             Example: S23B3 
             The above is the rule for Conway's Game of Life. It means that living cells with 2 or 3 living neighbors stay alive and dead cells with 3 neighbors become alive.
         """
+    ),
+    start_choice: str = typer.Option(
+        default="random_choice",
+        help=start_options_desc
+    ),
+    seconds_per_step: float = typer.Option(
+        default=0.6
     )
 ):
     """
     Example Command: $ python main.py --steps 10 --rule-string S23B3
     """
 
+    # --- Handling Rule String ---
     # Checking that rule string is in valid format
     assert re.match(string=rule_string, pattern=r"^S\d+B\d+$"), """
         Not a valid rule string. 
         Must follow the pattern "S_B_" with underscores replaced with digits. 
         No other characters are allowed.
     """
-    
     # Extract substrings for S and B
     survive_str, birth_str = re.findall(string=rule_string, pattern=r"^S(\d+)B(\d+)$")[0]
     # Convert to sets of integers
     survive_set = set(map(int, survive_str))
     birth_set = set(map(int, birth_str))
 
+    # Use function and global dictionary from starting_states module
+    start = get_start(start_choice)
+
     # Initialize CA
     ca = CellularAutomaton(
-        grid_state=test_state,
+        grid_state=start,
         survive_set=survive_set,
         birth_set=birth_set
     )
 
     # Rollout and display
-    render_rollout(ca=ca, steps=steps)  
+    render_rollout(
+        ca=ca, 
+        steps=steps, 
+        seconds_per_step=seconds_per_step
+    )  
 
 
 if __name__ == "__main__":
