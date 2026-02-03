@@ -1,7 +1,7 @@
 from sim import CellularAutomaton
 
 import numpy as np
-from typing import Dict, Any
+from typing import Dict
 from numpy.typing import ArrayLike
 from rich.live import Live
 from rich.text import Text
@@ -9,7 +9,7 @@ import time
 
 
 # Text symbols for visualization
-_CELL_WIDTH = 2
+_CELL_WIDTH: int = 2
 _STATE_TO_TEXT: Dict[int, str] = {
     0: "_"*_CELL_WIDTH,
     1: "█"*_CELL_WIDTH
@@ -38,7 +38,7 @@ def _render_state(
     # --- Input Error Handling ---
     # Checking grid_state is valid
     try:
-        grid_state = np.asarray(grid_state)
+        grid_state: np.ndarray = np.asarray(grid_state)
     except (TypeError, ValueError) as e:
         raise TypeError("grid_state must be array-like.") from e
     if grid_state.ndim != 2:
@@ -46,7 +46,7 @@ def _render_state(
     if not np.isin(grid_state, (0, 1)).all():
         raise ValueError("All cells in grid_state must be 0 or 1.")
     
-    # Initialize list for containing lines of text-based visualization of grid
+    # Initialize list for containing lines for text-based visualization of grid
     lines: list[str] = []
     
     # --- Generating grid "roof" ---
@@ -66,7 +66,7 @@ def _render_state(
         lines.append(line)
     
     # Combine lines together with line breaks between
-    state_string = "\n".join(lines)
+    state_string: str = "\n".join(lines)
 
     # Add final line break to give visual a bit of space from the bottom of the terminal
     state_string += "\n"
