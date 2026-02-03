@@ -15,7 +15,7 @@ def main(
     steps: int = typer.Option(
         default=5,
         help="""
-            Number of steps in the rollout
+            Number of steps in the rollout.
         """
     ),
     rule_string: str = typer.Option(
@@ -40,7 +40,7 @@ def main(
     """
 
     # --- Handling Rule String ---
-    # Checking that rule string is in valid format
+    # Check that rule string is in valid format
     assert re.match(string=rule_string, pattern=r"^S\d+B\d+$"), """
         Not a valid rule string. 
         Must follow the pattern "S_B_" with underscores replaced with digits. 
@@ -52,17 +52,18 @@ def main(
     survive_set = set(map(int, survive_str))
     birth_set = set(map(int, birth_str))
 
+    # --- Retrieving Starting State ---
     # Use function and global dictionary from starting_states module
     start = get_start(start_choice)
 
-    # Initialize CA
+    # --- Initializing CA ---
     ca = CellularAutomaton(
         grid_state=start,
         survive_set=survive_set,
         birth_set=birth_set
     )
 
-    # Rollout and display
+    # --- Animating Rollout ---
     render_rollout(
         ca=ca, 
         steps=steps, 
