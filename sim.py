@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.typing import ArrayLike
+from numpy.random import Generator
 from scipy.signal import convolve2d
 
 
@@ -48,6 +49,7 @@ class CellularAutomaton:
         Set of neighbor counts that result in dead cells transitioning to alive. 
     update_rate : float
         For asynchronous updating. Percentage chance of updating each step.
+    seed : np.random.Generator
     """
 
     def __init__(
@@ -55,7 +57,8 @@ class CellularAutomaton:
         grid_state: ArrayLike,
         survive_set: set = {2, 3},
         birth_set: set = {3},
-        update_rate: float = 1.0
+        update_rate: float = 1.0,
+        rng: Generator = None
     ):
         # Checks grid is binary and converts to numpy array if not already
         grid_state: np.ndarray = _normalize_grid_state(grid_state)
@@ -64,6 +67,7 @@ class CellularAutomaton:
         self.survive_set: set = survive_set
         self.birth_set: set = birth_set
         self.update_rate: float = update_rate
+        self.rng: Generator = rng
 
 
     def _count_neighbors(self):
@@ -108,7 +112,7 @@ class CellularAutomaton:
         # Using is close to avoid any float rounding problems when synchrony is desired
         if not np.isclose(self.update_rate, 1.0):
             # Generate random mask with 1s for cells that will update and 0s for the rest
-            update_mask: np.ndarray = np.random.random(self.grid_state.shape) <= self.update_rate
+            update_mask: np.ndarray = self.rng.random(self.grid_state.shape) <= self.update_rate
             # Use new state where mask==1 and previous state where mask==0
             new_state: np.ndarray = (new_state * update_mask) + (self.grid_state * (1-update_mask))
 

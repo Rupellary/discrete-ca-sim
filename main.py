@@ -2,11 +2,11 @@ from sim import CellularAutomaton
 from render import render_rollout
 from starting_states import get_start, start_options_desc
 
-from typing import Annotated
 import numpy as np
 import typer
 import re
-
+from typing import Annotated
+from numpy.random import Generator
 
 # [to team] working off of Typer Docs: https://typer.tiangolo.com/tutorial/arguments/optional/#an-alternative-cli-argument-declaration
 app = typer.Typer()
@@ -45,6 +45,13 @@ def main(
             help="For asychronous CA. Probability that a cell will be updated during a step. Values below 1.0 result in stochastic updating."
         )
     ] = 1.0,
+    seed: Annotated[
+        int | None,
+        typer.Option(
+            "--seed", "-sd",
+            help="For asychronous CA. Random seed to fix randomization for reproducibility. Pass None for nondeterminstic results."
+        )
+    ] = None,
     seconds_per_step: Annotated[
         float,
         typer.Option(
@@ -67,6 +74,8 @@ def main(
         Choice of starting state. Valid options displayed with --help.
     update_rate : float
         Probability that a cell will update at each step. Values less than 1 result in asynchronous CA.
+    seed : int or None
+        For asychronous CA. Random seed to fix randomization for reproducibility. If None rng will not be fixed.
     seconds_per_step : float
         Number of seconds between steps of the animation.
 
@@ -90,6 +99,12 @@ def main(
         raise TypeError("--update-rate must be a number.")
     if not (0 <= update_rate <= 1.0):
         raise ValueError("--update-rate must be between 0 and 1")
+    # Check that seed is valid and set up RNG
+    try:
+        # Instatiate random number generator
+        rng: Generator = np.random.default_rng(seed)
+    except (TypeError, ValueError) as e:
+        raise ValueError("--seed must be int int or None") from e
     # Check that seconds_per_step is a valid type and reasonable value
     if not isinstance(seconds_per_step, (int, float)):
         raise TypeError("--seconds-per-step must be a number.")
@@ -113,7 +128,8 @@ def main(
         grid_state=start,
         survive_set=survive_set,
         birth_set=birth_set,
-        update_rate=update_rate
+        update_rate=update_rate,
+        rng=rng
     )
 
     # --- Animating Rollout ---
