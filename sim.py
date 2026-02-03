@@ -22,7 +22,7 @@ def _normalize_grid_state(
     """
 
     try:
-        grid_state: np.ndarray = np.asarray(grid_state)
+        grid_state: np.ndarray = np.asarray(grid_state).astype(int)
     except (TypeError, ValueError) as e:
         raise TypeError("grid_state must be array-like.") from e
     if grid_state.ndim != 2:
@@ -99,18 +99,18 @@ class CellularAutomaton:
         currently_alive: np.ndarray = self.grid_state
         currently_dead: np.ndarray = 1 - self.grid_state
         # Check whether neighbor counts meet survival and birth conditions
-        would_survive: np.ndarray = np.isin(neighbor_counts, self.survive_set)
-        would_birth: np.ndarray = np.isin(neighbor_counts, self.birth_set)
+        would_survive: np.ndarray = np.isin(neighbor_counts, list(self.survive_set)).astype(int)
+        would_birth: np.ndarray = np.isin(neighbor_counts, list(self.birth_set)).astype(int)
         # Only apply survival to living cells, only apply birth to dead cells, recombine final states
         new_state: np.ndarray = (currently_alive * would_survive) + (currently_dead * would_birth)
 
         # --- Asynchronous Updating ---
         # Using is close to avoid any float rounding problems when synchrony is desired
-        # if not np.isclose(self.update_rate, 1.0):
-        #     # Generate random mask with 1s for cells that will update and 0s for the rest
-        #     update_mask: np.ndarray = np.random.random(self.grid_state.shape) <= self.update_rate
-        #     # Use new state where mask==1 and previous state where mask==0
-        #     new_state: np.ndarray = (new_state * update_mask) + (self.grid_state * (1-update_mask))
+        if not np.isclose(self.update_rate, 1.0):
+            # Generate random mask with 1s for cells that will update and 0s for the rest
+            update_mask: np.ndarray = np.random.random(self.grid_state.shape) <= self.update_rate
+            # Use new state where mask==1 and previous state where mask==0
+            new_state: np.ndarray = (new_state * update_mask) + (self.grid_state * (1-update_mask))
 
         # Update grid_state
         self.grid_state: np.ndarray = new_state
