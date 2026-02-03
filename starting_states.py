@@ -58,17 +58,17 @@ def get_start(
 # ------------------------------
 
 start_options_desc = """
-Choice of starting states. Options are:
-random_choice: [default] randomly selects from the set of starting states
-randomize: generates a grid of binary values randomly
-block: 3x3 block of living cells in the center of the grid
-diamond: 3x3 diamond of living cells in the center of the grid
-seed: single living cell in the center of the grid
-nothing: empty grid, no living cells
-classic_shapes: set of classic Game of Life oscilators and still lifes
-oscillator: large 15-period Game of Life oscilator
-gliders: 3 classic Game of Life gliders
-checkered: grid is checkered with living and dead cells
+Choice of starting state. Options are: \n
+"random_choice": randomly selects from the set of starting states. \n
+"randomize": generates a grid of binary values randomly. \n
+"block": 3x3 block of living cells in the center of the grid. \n
+"diamond": 3x3 diamond of living cells in the center of the grid. \n
+"seed": single living cell in the center of the grid. \n
+"nothing": empty grid, no living cells. \n
+"classic_shapes": set of classic Game of Life oscilators and still lifes. \n
+"oscillator": large 15-period Game of Life oscilator. \n
+"gliders": 3 classic Game of Life gliders. \n
+"checkered": grid is checkered with living and dead cells. \n
 """
 
 START_OPTIONS: Dict[str, np.ndarray] = {
