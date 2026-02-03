@@ -1,4 +1,4 @@
-from sim import CellularAutomaton
+from sim import CellularAutomaton, _normalize_grid_state
 
 import numpy as np
 from typing import Dict
@@ -37,14 +37,7 @@ def _render_state(
 
     # --- Input Error Handling ---
     # Checking grid_state is valid
-    try:
-        grid_state: np.ndarray = np.asarray(grid_state)
-    except (TypeError, ValueError) as e:
-        raise TypeError("grid_state must be array-like.") from e
-    if grid_state.ndim != 2:
-        raise ValueError(f"grid_state must be 2 dimensional. Received shape {grid_state.shape}.")
-    if not np.isin(grid_state, (0, 1)).all():
-        raise ValueError("All cells in grid_state must be 0 or 1.")
+    grid_state = _normalize_grid_state(grid_state)
     
     # Initialize list for containing lines for text-based visualization of grid
     lines: list[str] = []
