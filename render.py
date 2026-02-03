@@ -2,13 +2,14 @@ from sim import CellularAutomaton
 
 import numpy as np
 from typing import Dict, Any
+from numpy.typing import ArrayLike
 from rich.live import Live
 from rich.text import Text
 import time
 
 
 def _render_state(
-    grid_state: np.ndarray,
+    grid_state: ArrayLike,
     symbols: Dict[Any, str] = {1: "██", 0: "__", "sep": "|"}
 ) -> Text:
     """
@@ -17,23 +18,62 @@ def _render_state(
 
     Parameters
     ----------
-    grid_state : np.ndarray
-        Current state of CA grid stored and 1s and 0s in a numpy array.
+    grid_state : array-like
+        Current state of CA grid stored as 1s and 0s in a 2D array.
     symbols : dict
         Dictionary for defining how the grid will be visualized.
-        1: How to represent living cells in text.
-        0: How to represent dead cells in text.
-        sep: Text element to put between cells.
-    """    
+        Required keys:
+            1: How to represent living cells in text.
+            0: How to represent dead cells in text.
+            sep: Text element to put between cells.
+    
+    Returns
+    ---------
+    Text(state_string) : rich.text.Text
+        Rich text object representing grid state for visualization.
+    """
+
+    # --- Input Error Handling ---
+    # Checking grid_state is valid
+    try:
+        grid_state = np.asarray(grid_state)
+    except (TypeError, ValueError) as e:
+        raise TypeError("grid_state must be array-like.") from e
+    if grid_state.ndim != 2:
+        raise ValueError(f"grid_state must be 2 dimensional. Received shape {grid_state.shape}.")
+    # Checking symbols dict is valid
+    if not isinstance(symbols, dict):
+        raise TypeError("symbols must be a dict.")
+    required_keys = {1, 0, "sep"}
+    missing_keys = required_keys - symbols.keys()
+    if missing_keys:
+        raise KeyError(f"symbols dict missing required keys: {missing_keys}")
+    for key in required_keys:
+        if not isinstance(symbols[key], str):
+            raise TypeError(f"symbols[{key}] must be string. Was {type(symbols[key]).__name__}")
+    if len(symbols[0]) != len(symbols[1]):
+        raise ValueError("symbols[0] and symbols[1] must be of same length to keep grid size constant.")
+    if len(symbols[0])==0 or len(symbols[1])==0:
+        raise ValueError("symbols[0] and symbols[1] must have at least 1 character.")
+    if symbols[0] == symbols[1]:
+        raise ValueError("symbols[0] and symbols[1] cannot be the same.")
+
+    # Alias symbols
+    dead_str: str = symbols[0]
+    sep: str = symbols["sep"]
+    state_len: int = len(dead_str)
+    sep_len: int = len(sep)
+    cell_len: int = state_len + sep_len
+    row_len: int = grid_state.shape[0]
     
     # Initialize string for containing text-based visualization of grid
     state_string: str = ""
     
     # --- Generating grid "roof" ---
     # Compute line length to know how many characters to have in the first row
-    line_length: int = len(grid_state[0]) * (len(symbols[0]) + len(symbols["sep"])) + len(symbols["sep"])
+    line_length: int = (row_len * cell_len) + sep_len
     # Concatenate underscores into "roof" of grid (" " between cells, "_" over them)
-    grid_roof: str = (" " + "_"*len(symbols[0]))*int(line_length/3)
+    grid_roof: str = (" " + "_"*state_len)*row_len
     # Add roof to state string
     state_string += grid_roof 
 
@@ -45,7 +85,7 @@ def _render_state(
         # Convert numbers into symbols from the symbols dict for displaying
         line: list[str] = [symbols[cell] for cell in row]
         # Concatenate cell symbols with separator
-        line: str = symbols["sep"] + symbols["sep"].join(line) + symbols["sep"]
+        line: str = sep + sep.join(line) + sep
         # Add row to state string
         state_string += line
     
@@ -62,7 +102,7 @@ def render_rollout(
     seconds_per_step: float = 0.6
 ) -> None:
     """
-    Renders cellular automaton rollout in the terminal using rich library's Live objects.
+    Renders cellular automaton rollout in the terminal using rich library"s Live objects.
     
     Parameters
     ----------
