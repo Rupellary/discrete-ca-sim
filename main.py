@@ -39,13 +39,24 @@ def main(
     Example Command: $ python main.py --steps 10 --rule-string S23B3
     """
 
-    # --- Handling Rule String ---
+    # --- Input Error Handling ---
+    # Check that number of steps is valid
+    if not isinstance(steps, int):
+        raise TypeError("--steps must be an integer.")
+    if steps < 0:
+        raise ValueError("Cannot have negative steps of the simulation.")
     # Check that rule string is in valid format
-    assert re.match(string=rule_string, pattern=r"^S\d+B\d+$"), """
-        Not a valid rule string. 
-        Must follow the pattern "S_B_" with underscores replaced with digits. 
-        No other characters are allowed.
-    """
+    if not re.fullmatch(string=rule_string, pattern=r"S\d+B\d+"):
+        raise ValueError("--rule-string must follow the pattern S<digits>B<digits>. No other characters are allowed.")
+    # [Start state error handling is incorporated into the logic in get_start()]
+    # Check that seconds_per_step is a valid type and reasonable value
+    if not isinstance(seconds_per_step, (int, float)):
+        raise TypeError("--seconds-per-step must be a number.")
+    if seconds_per_step <= 0.01:
+        raise ValueError("--seconds-per-step must be greater than 0.01.")
+
+
+    # --- Converting Rule String ---
     # Extract substrings for S and B
     survive_str, birth_str = re.findall(string=rule_string, pattern=r"^S(\d+)B(\d+)$")[0]
     # Convert to sets of integers
