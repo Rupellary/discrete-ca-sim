@@ -20,7 +20,7 @@ def _normalize_grid_state(
     grid_state : np.ndarray
         Grid state now as a numpy array.
     """
-    
+
     try:
         grid_state: np.ndarray = np.asarray(grid_state)
     except (TypeError, ValueError) as e:
@@ -90,14 +90,14 @@ class CellularAutomaton:
         """
 
         # Count neighbors to compare with survival and birth conditions
-        neighbor_counts = self._count_neighbors()
+        neighbor_counts: np.ndarray = self._count_neighbors()
         # Generate boolean masks for which cells are currently alive and which are currently dead
-        currently_alive = self.grid_state
-        currently_dead = 1 - self.grid_state
+        currently_alive: np.ndarray = self.grid_state
+        currently_dead: np.ndarray = 1 - self.grid_state
         # Check whether neighbor counts meet survival and birth conditions
-        would_survive = np.isin(neighbor_counts, list(self.survive_set))
-        would_birth = np.isin(neighbor_counts, list(self.birth_set))
+        would_survive: np.ndarray = np.isin(neighbor_counts, self.survive_set)
+        would_birth: np.ndarray = np.isin(neighbor_counts, self.birth_set)
         # Only apply survival to living cells, only apply birth to dead cells, recombine final states
-        new_state = (currently_alive * would_survive) + (currently_dead * would_birth)
+        new_state: np.ndarray = (currently_alive * would_survive) + (currently_dead * would_birth)
         # Update grid state
-        self.grid_state = new_state
+        self.grid_state: np.ndarray = new_state
