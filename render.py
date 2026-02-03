@@ -1,15 +1,24 @@
-from sim import CellularAutomaton
+from sim import CellularAutomaton, _normalize_grid_state
 
 import numpy as np
-from typing import Dict, Any
+from typing import Dict
+from numpy.typing import ArrayLike
 from rich.live import Live
 from rich.text import Text
 import time
 
 
+# Text symbols for visualization
+_CELL_WIDTH: int = 2
+_STATE_TO_TEXT: Dict[int, str] = {
+    0: "_"*_CELL_WIDTH,
+    1: "█"*_CELL_WIDTH
+}
+_SEP: str = "|"
+
+
 def _render_state(
-    grid_state: np.ndarray,
-    symbols: Dict[Any, str] = {1: "██", 0: "__", "sep": "|"}
+    grid_state: ArrayLike
 ) -> Text:
     """
     Turns numpy array into rich.text.Text object to be rendered during animation.
@@ -17,38 +26,41 @@ def _render_state(
 
     Parameters
     ----------
-    grid_state : np.ndarray
-        Current state of CA grid stored and 1s and 0s in a numpy array.
-    symbols : dict
-        Dictionary for defining how the grid will be visualized.
-        1: How to represent living cells in text.
-        0: How to represent dead cells in text.
-        sep: Text element to put between cells.
-    """    
+    grid_state : array-like
+        Current state of CA grid stored as 1s and 0s in a 2D array.
     
-    # Initialize string for containing text-based visualization of grid
-    state_string: str = ""
+    Returns
+    ---------
+    Text(state_string) : rich.text.Text
+        Rich text object representing grid state for visualization.
+    """
+
+    # --- Input Error Handling ---
+    # Checking grid_state is valid
+    grid_state = _normalize_grid_state(grid_state)
+    
+    # Initialize list for containing lines for text-based visualization of grid
+    lines: list[str] = []
     
     # --- Generating grid "roof" ---
-    # Compute line length to know how many characters to have in the first row
-    line_length: int = len(grid_state[0]) * (len(symbols[0]) + len(symbols["sep"])) + len(symbols["sep"])
-    # Concatenate underscores into "roof" of grid (" " between cells, "_" over them)
-    grid_roof: str = (" " + "_"*len(symbols[0]))*int(line_length/3)
+    # Concatenate underscores into "roof" of grid (" "s between cells and "_"s over them)
+    grid_roof: str = ((" " * len(_SEP)) + ("_" * _CELL_WIDTH)) * grid_state.shape[1]
     # Add roof to state string
-    state_string += grid_roof 
+    lines.append(grid_roof)
 
     # --- Displaying Matrix ---
     # Loop through rows in the grid
     for row in grid_state:
-        # Add a line break to start next row
-        state_string += "\n"
-        # Convert numbers into symbols from the symbols dict for displaying
-        line: list[str] = [symbols[cell] for cell in row]
+        # Convert numbers into text for displaying
+        line: list[str] = [_STATE_TO_TEXT[cell] for cell in row]
         # Concatenate cell symbols with separator
-        line: str = symbols["sep"] + symbols["sep"].join(line) + symbols["sep"]
-        # Add row to state string
-        state_string += line
+        line: str = _SEP + _SEP.join(line) + _SEP
+        # Add row to list of lines
+        lines.append(line)
     
+    # Combine lines together with line breaks between
+    state_string: str = "\n".join(lines)
+
     # Add final line break to give visual a bit of space from the bottom of the terminal
     state_string += "\n"
 
@@ -62,7 +74,7 @@ def render_rollout(
     seconds_per_step: float = 0.6
 ) -> None:
     """
-    Renders cellular automaton rollout in the terminal using rich library's Live objects.
+    Renders cellular automaton rollout in the terminal using rich library"s Live objects.
     
     Parameters
     ----------
