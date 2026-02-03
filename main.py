@@ -38,6 +38,13 @@ def main(
             help=start_options_desc
         )
     ] = "random_choice",
+    update_rate: Annotated[
+        float,
+        typer.Option(
+            "--update-rate", "-ur",
+            help="For asychronous CA. Probability that a cell will be updated during a step. Values below 1.0 result in stochastic updating."
+        )
+    ] = 1.0,
     seconds_per_step: Annotated[
         float,
         typer.Option(
@@ -58,6 +65,8 @@ def main(
         Expressed as a string following the pattern S<digits>B<digits>. E.g. S23B3.
     start_choice : str
         Choice of starting state. Valid options displayed with --help.
+    update_rate : float
+        Probability that a cell will update at each step. Values less than 1 result in asynchronous CA.
     seconds_per_step : float
         Number of seconds between steps of the animation.
 
@@ -76,6 +85,11 @@ def main(
     if not re.fullmatch(string=rule_string, pattern=r"S\d+B\d+"):
         raise ValueError("--rule-string must follow the pattern S<digits>B<digits>. No other characters are allowed.")
     # [Start state error handling is incorporated into the logic in get_start()]
+    # Check that update rate is a valid type and probability
+    if not isinstance(update_rate, (int, float)):
+        raise TypeError("--update-rate must be a number.")
+    if not (0 <= update_rate <= 1.0):
+        raise ValueError("--update-rate must be between 0 and 1")
     # Check that seconds_per_step is a valid type and reasonable value
     if not isinstance(seconds_per_step, (int, float)):
         raise TypeError("--seconds-per-step must be a number.")
@@ -98,7 +112,8 @@ def main(
     ca = CellularAutomaton(
         grid_state=start,
         survive_set=survive_set,
-        birth_set=birth_set
+        birth_set=birth_set,
+        update_rate=update_rate
     )
 
     # --- Animating Rollout ---
