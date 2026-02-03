@@ -81,7 +81,8 @@ def main(
 
     Examples
     ----------
-    $ python main.py -s 30 --rule S23B3 --start gliders -sps 0.5 
+    $ python main.py -s 100 --rule S23B3 --start gliders -sps 0.1
+    $ python main.py -s 100 -r S23B3 --start block -ur 0.6 -sd 42 -sps 0.05
     """
 
     # --- Input Error Handling ---

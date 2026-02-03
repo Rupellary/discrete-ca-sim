@@ -89,7 +89,7 @@ def render_rollout(
     starting_state_render = _render_state(ca.grid_state)
 
     # --- Creating animation with rich.live.Live ---
-    with Live(starting_state_render, screen=True) as live:
+    with Live(starting_state_render, refresh_per_second=60, screen=True) as live:
         for _ in range(steps):
             # Update grid state
             ca.step()
