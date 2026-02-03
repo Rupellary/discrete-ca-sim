@@ -1,5 +1,5 @@
 import numpy as np
-from np.typing import ArrayLike
+from numpy.typing import ArrayLike
 from scipy.signal import convolve2d
 
 
@@ -22,7 +22,7 @@ def _normalize_grid_state(
     """
 
     try:
-        grid_state: np.ndarray = np.asarray(grid_state)
+        grid_state: np.ndarray = np.asarray(grid_state).astype(int)
     except (TypeError, ValueError) as e:
         raise TypeError("grid_state must be array-like.") from e
     if grid_state.ndim != 2:
@@ -95,8 +95,8 @@ class CellularAutomaton:
         currently_alive: np.ndarray = self.grid_state
         currently_dead: np.ndarray = 1 - self.grid_state
         # Check whether neighbor counts meet survival and birth conditions
-        would_survive: np.ndarray = np.isin(neighbor_counts, self.survive_set)
-        would_birth: np.ndarray = np.isin(neighbor_counts, self.birth_set)
+        would_survive: np.ndarray = np.isin(neighbor_counts, list(self.survive_set)).astype(int)
+        would_birth: np.ndarray = np.isin(neighbor_counts, list(self.birth_set)).astype(int)
         # Only apply survival to living cells, only apply birth to dead cells, recombine final states
         new_state: np.ndarray = (currently_alive * would_survive) + (currently_dead * would_birth)
         # Update grid state
