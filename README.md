@@ -9,6 +9,7 @@ Cellular Automata are a computational phenomenon used to study a variety of conc
 The update rule for Conway’s Game of Life can be decomposed into two sets:
 1. For living cells: which counts (0-8) of living neighbors result in the cell staying alive. This is referred to in the code as the survival_set
 2. For dead cells: which counts (0-8) of living neighbors result in the cell becoming alive. This is referred to in the code as the birth_set.
+
 For Conway's Game of Life the rule is: survival_set={2, 3}, birth_set={3}.
 These sets are denoted with the convention S_B_. For example "S23B3".
 
