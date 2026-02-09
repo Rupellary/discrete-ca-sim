@@ -2,3 +2,4 @@ typer==0.21.0
 numpy==2.1.0
 scipy==1.17.0
 rich==14.3.1
+pytest==9.0.2
