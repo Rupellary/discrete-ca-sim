@@ -42,7 +42,7 @@ def get_start(
     
     # Randomly generate binary grid
     if start_choice == "randomize":
-        start: np.ndarray = rng.integers(0, 2, shape=shape_of_random)
+        start: np.ndarray = rng.integers(0, 2, size=shape_of_random)
 
     # Lookup in dictionary
     elif start_choice in START_OPTIONS.keys():
