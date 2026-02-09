@@ -37,7 +37,7 @@ def _render_state(
 
     # --- Input Error Handling ---
     # Checking grid_state is valid
-    grid_state = _normalize_grid_state(grid_state)
+    grid_state: np.ndarray = _normalize_grid_state(grid_state)
     
     # Initialize list for containing lines for text-based visualization of grid
     lines: list[str] = []
@@ -86,7 +86,7 @@ def render_rollout(
         Number of seconds between steps of the rollout.
     """
     
-    starting_state_render = _render_state(ca.grid_state)
+    starting_state_render: Text = _render_state(ca.grid_state)
 
     # --- Creating animation with rich.live.Live ---
     with Live(starting_state_render, refresh_per_second=60, screen=True) as live:

@@ -73,7 +73,7 @@ class CellularAutomaton:
     def _count_neighbors(self):
         """
         Counts number of active neighbors in the 3x3 neighborhood around each cell.
-        Returns a grid of the same size with each cells' count of active neighbors. 
+        Returns a grid of the same size with each cells" count of active neighbors. 
         Helper function for step() method.
         """
 
@@ -86,8 +86,8 @@ class CellularAutomaton:
         neighbor_counts: np.ndarray = convolve2d(
             self.grid_state, 
             neighbor_count_kernel, 
-            mode='same', #removes the extra rows and columns that would result from a proper convolution
-            boundary='wrap'
+            mode="same", #removes the extra rows and columns that would result from a proper convolution
+            boundary="wrap"
         )
         return neighbor_counts
 

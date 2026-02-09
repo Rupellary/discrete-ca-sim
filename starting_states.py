@@ -31,7 +31,7 @@ def get_start(
     """
 
     # Concatenate into full list of options
-    start_options: list[str] = list(START_OPTIONS.keys()) + ['randomize']
+    start_options: list[str] = list(START_OPTIONS.keys()) + ["randomize"]
 
     # Random choice randomly selects from options
     if start_choice == "random_choice":
@@ -60,7 +60,7 @@ def get_start(
 # --- STARTING STATE OPTIONS ---
 # ------------------------------
 
-start_options_desc = """
+start_options_desc: str = """
 Choice of starting state. Options are: \n
 "random_choice": randomly selects from the set of starting states. \n
 "randomize": generates a grid of binary values randomly. \n

@@ -118,15 +118,15 @@ def main(
     # Extract substrings for S and B
     survive_str, birth_str = re.findall(string=rule_string, pattern=r"^S(\d*)B(\d*)$")[0]
     # Convert to sets of integers
-    survive_set = set(map(int, survive_str))
-    birth_set = set(map(int, birth_str))
+    survive_set: set = set(map(int, survive_str))
+    birth_set: set = set(map(int, birth_str))
 
     # --- Retrieving Starting State ---
     # Use function and global dictionary from starting_states module
-    start = get_start(start_choice, rng)
+    start: np.ndarray = get_start(start_choice, rng)
 
     # --- Initializing CA ---
-    ca = CellularAutomaton(
+    ca: CellularAutomaton = CellularAutomaton(
         grid_state=start,
         survive_set=survive_set,
         birth_set=birth_set,
@@ -139,7 +139,7 @@ def main(
         ca=ca, 
         steps=steps, 
         seconds_per_step=seconds_per_step
-    )  
+    )
 
 
 if __name__ == "__main__":
