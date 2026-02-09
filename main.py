@@ -19,7 +19,7 @@ def main(
             "--steps", "-s",
             help="Number of steps in the rollout."
         )
-    ] = 5,
+    ] = 30,
     rule_string: Annotated[
         str,
         typer.Option(
@@ -58,7 +58,7 @@ def main(
             "--sec-per-step", "-sps",
             help="Number of seconds between steps of animation. Smaller values speed up the simulation."
         )
-    ] = 0.6
+    ] = 0.3
 ):
     """
     Runs discrete cellular automaton simulation in terminal.
@@ -83,7 +83,7 @@ def main(
     ----------
     $ python main.py -s 100 --rule S23B3 --start gliders -sps 0.1
     $ python main.py -s 100 -r S23B3 --start block -ur 0.6 -sd 42 -sps 0.05
-    $ python main.py -s 100 -r S23B3 --start oscillator -ur 1.0 -sd 42 -sps 0.1
+    $ python main.py -s 100 -r S23B3 --start oscillator -ur 1.0 -sps 0.1
     """
 
     # --- Input Error Handling ---
@@ -123,7 +123,7 @@ def main(
 
     # --- Retrieving Starting State ---
     # Use function and global dictionary from starting_states module
-    start = get_start(start_choice)
+    start = get_start(start_choice, rng)
 
     # --- Initializing CA ---
     ca = CellularAutomaton(
