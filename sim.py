@@ -19,15 +19,18 @@ def _normalize_grid_state(
     Returns
     ----------
     grid_state : np.ndarray
-        Grid state now as a numpy array.
+        Grid state now as an integer numpy array.
     """
 
+    # Convert to integer numpy array if not already. Raise error if not possible.
     try:
         grid_state: np.ndarray = np.asarray(grid_state).astype(int)
     except (TypeError, ValueError) as e:
         raise TypeError("grid_state must be array-like.") from e
+    # Ensure that matrix is rank 2
     if grid_state.ndim != 2:
         raise ValueError(f"grid_state must be 2 dimensional. Received shape {grid_state.shape}.")
+    # Ensure that grid is binary
     if not np.isin(grid_state, (0, 1)).all():
         raise ValueError("All cells in grid_state must be 0 or 1.")
     
@@ -77,6 +80,7 @@ class CellularAutomaton:
         Helper function for step() method.
         """
 
+        # Define kernel for counting neighbors in 3x3 (does not count self)
         neighbor_count_kernel: np.ndarray = np.array([
             [1, 1, 1],
             [1, 0, 1],
@@ -86,8 +90,8 @@ class CellularAutomaton:
         neighbor_counts: np.ndarray = convolve2d(
             self.grid_state, 
             neighbor_count_kernel, 
-            mode="same", #removes the extra rows and columns that would result from a proper convolution
-            boundary="wrap"
+            mode="same",
+            boundary="wrap" # results in toroidal topology
         )
         return neighbor_counts
 
