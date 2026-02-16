@@ -27,6 +27,8 @@ def _normalize_grid_state(
         grid_state: np.ndarray = np.asarray(grid_state).astype(int)
     except (TypeError, ValueError) as e:
         raise TypeError("grid_state must be array-like.") from e
+    
+    # Enforce a 2D discrete grid space
     # Ensure that matrix is rank 2
     if grid_state.ndim != 2:
         raise ValueError(f"grid_state must be 2 dimensional. Received shape {grid_state.shape}.")
@@ -40,7 +42,7 @@ def _normalize_grid_state(
 class CellularAutomaton:
     """
     Cellular automaton, including grid state as an attribute and update rule as a method.
-    Updates states based on the count of living neighbors.
+    Updates states based on the count of "living" neighbors.
 
     Attributes
     ----------

@@ -1,16 +1,16 @@
-from sim import CellularAutomaton
-from render import render_rollout
-from starting_states import get_start, start_options_desc
-from validation import validate_inputs
-
 import numpy as np
 import typer
 import re
 from typing import Annotated
 from numpy.random import Generator
 
+from sim import CellularAutomaton
+from render import render_rollout
+from starting_states import get_start, start_options_desc
+from validation import validate_inputs
 
 
+# Following standard typer app pattern for shell parameter parsing and --help customization
 app = typer.Typer()
 
 @app.command()
@@ -37,7 +37,7 @@ def main(
         str,
         typer.Option(
             "--start",
-            help=start_options_desc
+            help=start_options_desc  #next to starting states dict in starting_states.py
         )
     ] = "random_choice",
     update_rate: Annotated[
@@ -63,7 +63,9 @@ def main(
     ] = 0.3
 ):
     """
-    Runs discrete cellular automaton simulation in terminal.
+    Runs discrete cellular automaton simulation in the terminal. 
+    Parses parameters from the shell using typer library.
+    Annotated with additional documentation available in the CLI via --help.
 
     Parameters
     ----------
@@ -71,13 +73,14 @@ def main(
         Number of steps of CA rollout to animate.
     rule_string : str
         Update rule specified as sets of neighbor counts with live->live transition (survive) and sets with dead->live transition (birth).
-        Expressed as a string following the pattern S<digits>B<digits>. E.g. S23B3.
+        Expressed as a string following the pattern S<digits>B<digits>. 
+        For example, S23B3 specifies Conway's Game of Life: living cells with 2 or 3 living neighbors survive, dead cells with exactly 3 neighbors become alive.
     start_choice : str
         Choice of starting state. Valid options displayed with --help.
     update_rate : float
         Probability that a cell will update at each step. Values less than 1 result in asynchronous CA.
     seed : int or None
-        For asychronous CA. Random seed to fix randomization for reproducibility. If None rng will not be fixed.
+        For asychronous CA and start_choice="randomized". Seed to fix randomization for reproducibility. If None rng will not be fixed.
     seconds_per_step : float
         Number of seconds between steps of the animation.
 
@@ -98,7 +101,7 @@ def main(
         seconds_per_step  
     )
 
-    # --- Converting Rule String ---
+    # --- Converting Rule String to Sets of Integers ---
     # Extract substrings for S and B
     survive_str, birth_str = re.findall(string=rule_string, pattern=r"^S(\d*)B(\d*)$")[0]
     # Convert to sets of integers
@@ -106,12 +109,12 @@ def main(
     birth_set: set = set(map(int, birth_str))
 
     # --- Retrieving Starting State ---
-    # Initialize RNG
+    # Initialize RNG for determinism. Only applies when start_choice=="randomized" or update_rate < 1.0
     rng: Generator = np.random.default_rng(seed)
-    # Retrieve or generate starting state
+    # Retrieve or generate starting state according to choice
     start: np.ndarray = get_start(start_choice, rng)
 
-    # --- Initializing CA ---
+    # --- Initializing CA with Starting State and Rule Sets ---
     ca: CellularAutomaton = CellularAutomaton(
         grid_state=start,
         survive_set=survive_set,

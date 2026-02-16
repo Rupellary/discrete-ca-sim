@@ -10,7 +10,7 @@ def get_start(
     shape_of_random: Tuple[int] = (18, 18),
 ) -> np.ndarray:
     """
-    Uses global dictionary of starting states START_OPTIONS to convert input into numpy array.
+    Uses global dictionary of starting states START_OPTIONS to fetch the corresponding starting grid state numpy array.
     Generates random grid if choice is "randomize".
     
     Parameters
@@ -50,7 +50,7 @@ def get_start(
 
     # If the input is none of these, raise a value error
     else: 
-        raise ValueError("start-choice must be one of the valid options. Use --help to see what options are allowed")
+        raise ValueError("--start must be one of the valid options. Use --help to see what options are allowed.")
 
     # Return starting state grid
     return start
