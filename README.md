@@ -111,7 +111,7 @@ Randomly generates the starting state. In the current version, all cells have an
 #### `--start diamond`
 
 <p align="center">
-  <img src="docs/assets/diamonde.svg" width="50%" alt="Image of 'diamond' starting state">
+  <img src="docs/assets/diamond.svg" width="50%" alt="Image of 'diamond' starting state">
 </p>
 
 #### `--start seed`
