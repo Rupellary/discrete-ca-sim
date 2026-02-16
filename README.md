@@ -59,8 +59,8 @@ This will run it with the default parameter settings which uses the Game of Life
 | Argument                 | Type  | Default         | Description |
 |--------------------------|-------|-----------------|-------------|
 | `-s`, `--steps`          | int   | 30              | Number of steps to rollout for the animation. |
-| `-r`, `--rule`           | str   | "S23B3"         | CA update rule. [See below](### Rule Specification Syntax) for more details on the notation. |
-| `--start`                | str   | "random_choice" | Choice of starting state for the simulation. [See below](### Starting State Options) for more details on the options. |
+| `-r`, `--rule`           | str   | "S23B3"         | CA update rule. [See below](#rule-specification-syntax) for more details on the notation. |
+| `--start`                | str   | "random_choice" | Choice of starting state for the simulation. [See below](#starting-state-options) for more details on the options. |
 | `-ur`, `--update_rate`   | float | 1.0             | For asynchronous CA. Values less than 1 result in stochastic updating where cells have this probability of updating at each step. |
 | `-sd`, `--seed`          | int   | `None`          | Random seed for determinsitic randomization. Affects randomly generated starting states and asynchronous updating but not start="random_choice" as this can can already be fixed with manual selection. |
 | `-sps`, `--sec-per-step` | float | 0.3             | Seconds between steps while animating. Smaller values speed up the animation. |
