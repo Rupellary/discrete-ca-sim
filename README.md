@@ -99,39 +99,58 @@ This is the default option, it randomly selects from the other options.
 Randomly generates the starting state. In the current version, all cells have an equal probability of being on or off. In future versions this probability may be under user control.
 
 <p align="center">
-  <img src="docs/assets/randomize.svg" width="50%" alt="Image of randomized starting state">
+  <img src="docs/assets/randomize.svg" width="50%" alt="Image of 'randomize' starting state">
 </p>
 
 #### `--start block`
 
-![block](docs/assets/block.svg)
+<p align="center">
+  <img src="docs/assets/block.svg" width="50%" alt="Image of 'block' starting state">
+</p>
 
 #### `--start diamond`
 
-![diamond](docs/assets/diamond.svg)
+<p align="center">
+  <img src="docs/assets/diamonde.svg" width="50%" alt="Image of 'diamond' starting state">
+</p>
 
 #### `--start seed`
 
-![seed](docs/assets/seed.svg)
+<p align="center">
+  <img src="docs/assets/seed.svg" width="50%" alt="Image of 'seed' starting state">
+</p>
 
 #### `--start nothing`
 This will only result in behavior if the birth set includes 0.
 
-![nothing](docs/assets/nothing.svg)
+<p align="center">
+  <img src="docs/assets/nothing.svg" width="50%" alt="Image of 'nothing' starting state">
+</p>
 
 #### `--start classic_shapes`
-These shapes have [interesting behavior](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#:~:text=edit%20source%5D-,Pattern%20taxonomy,-%5Bedit%20source) under the original Game of Life rule
-![classic_shapes](docs/assets/classic_shapes.svg)
+These shapes have [interesting behavior](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#:~:text=edit%20source%5D-,Pattern%20taxonomy,-%5Bedit%20source) under the original Game of Life rule.
+
+<p align="center">
+  <img src="docs/assets/classic_shapes.svg" width="50%" alt="Image of 'classic_shapes' starting state">
+</p>
 
 #### `--start oscillator`
+This shape results in a repeating cycle of states under the original Game of Life rule. 
 
-![oscillator](docs/assets/oscillator.svg)
+<p align="center">
+  <img src="docs/assets/oscillator.svg" width="50%" alt="Image of 'oscillator' starting state">
+</p>
 
 #### `--start gliders`
 The ["Glider"](https://en.wikipedia.org/wiki/Glider_(Conway%27s_Game_of_Life)) is a well-known shape in the Game of Life. It is the simplest pattern that repeats itself translated as though moving through the space.
-![gliders](docs/assets/gliders.svg)
+
+<p align="center">
+  <img src="docs/assets/gliders.svg" width="50%" alt="Image of 'gliders' starting state">
+</p>
 
 #### `--start checkered`
 
-![checkered](docs/assets/checkered.svg)
+<p align="center">
+  <img src="docs/assets/checkered.svg" width="50%" alt="Image of 'checkered' starting state">
+</p>
 
