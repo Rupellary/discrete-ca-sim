@@ -214,7 +214,7 @@ Follow these steps:
 1. Fork the repository
 2. Create a branch following the established [branch naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=1.%20Branch%20Naming%20Conventions), e.g. `git checkout -b feat/feature-name`.
 3. Make commits following the established [commit naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=2.%20Writing%20Meaningful%20Commits) as much as possible, e.g. `git commit -m "fix: ..."`
-4. Open an issue following the advice in the [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features) section above.
+4. Open an issue on GitHub describing what your feature adds. Make sure you add the label "user-created-feature" to the issue.
 5. Create a pull request with your fork and link it to the issue you just created.
 
 
