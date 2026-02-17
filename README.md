@@ -237,13 +237,13 @@ Docstrings follow the numpy format and should be included with all functions.
 
 ### Type Hinting
 
-For a variety of reasons, typehinting is being used excessively. Any time a variable is being assigned and a typehint is possible it should be included. 
+For a variety of reasons, type hinting is being used excessively. Any time a variable is being assigned and a type hint is possible it should be included. 
 
-However, if typehinting would require some bit of refactoring it is only requested if the type is truly vague (for instance, the output from a function assigned to a variable whose name does not fully disambiguate the type). As long as it is clear through comments or otherwise, you can, for instance, assign multiple variables at once even through it prohibits typehinting and do not need extra lines initializing variables purely for the sake of typehints. 
+However, if type hinting would require some bit of refactoring it is only requested if the type is truly vague (for instance, the output from a function assigned to a variable whose name does not fully disambiguate the type). As long as it is clear through comments or otherwise, you can, for instance, assign multiple variables at once even though it prohibits type hinting, and do not need extra lines initializing variables purely for the sake of type hints. 
 
-Typehints should always be used for function parameters, function outputs, and variables that start off empty (empty list, dict, etc.).
+Type hints should always be used for function parameters, function outputs, and variables that start off empty (empty list, dict, etc.).
 
-Rule of thumb: use typehints as much as possible, unless it truly comes at a cost that is greater than the reward.
+Rule of thumb: use type hints as much as possible, unless it truly comes at a cost that is greater than the reward.
 
 
 ### Other Style Choices
