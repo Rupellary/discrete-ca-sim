@@ -172,3 +172,84 @@ If you select "randomize" for the starting state, a starting state will be rando
 4. A random seed to make the generation deterministic for reproducibility. Make sure you remember what you input if you want to try running it with the same starting state again.
 
 Rather than throwing errors, if the user accidentally inputs something invalid when answering these prompts, the app notifies the user and asks for a new input.
+
+
+## Reporting Bugs and Requesting Features
+
+
+### Reporting Bugs
+
+To report a bug, follow these steps:
+1. Double check you have properly followed the installation and usage instructions
+2. Try to reproduce the bug in as few steps as possible
+3. Open an issue on GitHub
+4. In the issue write...
+  i. How to reproduce the bug
+  ii. What you expected to happen
+  iii. What actually happened
+  iv. Any helpful screenshots
+  v. Details on what versions of the used packages you have installed (they should match what is in the installation instructions) and the OS you are running
+  vi. What version of this app you are running
+5. Select the label "user-reported-bug" in the issue labels
+
+
+### Requesting Features
+
+To request a feature, follow these steps:
+1. Open an issue on GitHub 
+2. Describe the functionality you would like the app to have
+3. Select the label "user-requested-feature" in the issue labels
+
+
+## Contributing
+
+Contributions are welcome! 
+
+To maintain readability, I request that you follow the style conventions of the current codebase. You may pick these up by reading, but some are listed explicitly below. A pull request will not be rejected based purely on stylistic grounds, but stylistic coherence is a factor as it enhances readability so it is highly encouraged that you stick to these patterns as much as possible.
+
+
+### Git Workflow
+
+Follow these steps:
+1. Fork the repository
+2. Create a branch following the established [branch naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=1.%20Branch%20Naming%20Conventions), e.g. `git checkout -b feat/feature-name`.
+3. Make commits following the established [commit naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=2.%20Writing%20Meaningful%20Commits) as much as possible, e.g. `git commit -m "fix: ..."`
+4. Open an issue following the advice in the [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features) section above.
+5. Create a pull request with your fork and link it to the issue you just created.
+
+
+### Comments
+
+Comments follow gramatical patterns:
+1. When using headers to group chunks of code together comments follow this pattern: `# --- <title case noun phrase> ---`. For example: `# --- Generating Random Starting States ---`
+2. When using comments on a line by line basis, they switch to the imperative mood. For example: `# Generate random starting state`
+3. Comments that appear in the same line as code are minimized, but when used follow this pattern: `<code>  # <lower case comment>`. For example  `0: "_" * _CELL_WIDTH,  # how dead cells will be displayed`. Note that there are two spaces after the code before the hash.
+4. Comments do not end with periods
+5. Occassionally, if helpful, subheadings can be used with one less hyphen. For example: `# -- <title case noun phrase> --`
+
+Comments should focus on explaining the step of logic being implemented in the code, and if needed clarify the role that step plays in the larger goal this code fits into, rather than simply describing how the code will execute.
+
+
+### Docstrings
+
+Docstrings follow the numpy format and should be included with all functions. 
+
+
+### Type Hinting
+
+For a variety of reasons, typehinting is being used excessively. Any time a variable is being assigned and a typehint is possible it should be included. 
+
+However, if typehinting would require some bit of refactoring it is only requested if the type is truly vague (for instance, the output from a function assigned to a variable whose name does not fully disambiguate the type). As long as it is clear through comments or otherwise, you can, for instance, assign multiple variables at once even through it prohibits typehinting and do not need extra lines initializing variables purely for the sake of typehints. 
+
+Typehints should always be used for function parameters, function outputs, and variables that start off empty (empty list, dict, etc.).
+
+Rule of thumb: use typehints as much as possible, unless it truly comes at a cost that is greater than the reward.
+
+
+### Other Style Choices
+
+* Always use double quotes (`"<string>"`) for strings instead of single quotes (`'<string>'`).
+* Separate imports from other files from imports from libraries etc. with one line break.
+* ...
+
+In general, if you want to help maximize style consistency, you can look for existing code that does something similar to what you are trying to do and check for style patterns in the existing codebase.
