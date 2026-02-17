@@ -10,12 +10,12 @@ from sim import CellularAutomaton, _normalize_grid_state
 
 # Numpy arrays will be converted to rich.text.Text objects for display in the terminal
 # These are the symbol choices used for representing the grid state with text.
-_CELL_WIDTH: int = 2 # how many times the character is repeated. 2 results in roughly square cells.
+_CELL_WIDTH: int = 2  # how many times the character is repeated. 2 results in roughly square cells.
 _STATE_TO_TEXT: Dict[int, str] = {
-    0: "_" * _CELL_WIDTH, # how dead cells will be displayed
-    1: "█" * _CELL_WIDTH # how living cells will be displayed
+    0: "_" * _CELL_WIDTH,  # how dead cells will be displayed
+    1: "█" * _CELL_WIDTH  # how living cells will be displayed
 }
-_SEP: str = "|" # separator between cells. "|" results in a nice grid look.
+_SEP: str = "|"  # separator between cells. "|" results in a nice grid look.
 
 
 def _render_state(

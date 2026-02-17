@@ -40,10 +40,10 @@ INVALID_SECONDS_PER_STEP: list[Any] = [-0.1, 0.0, None, "0.8"]
 # --- Testing Validation Function with Valid and Invalid Inputs ---
 
 # -- Testing Steps Options --
-@pytest.mark.parametrize("steps", VALID_STEPS) # loop through parameter options, testing each
+@pytest.mark.parametrize("steps", VALID_STEPS)  # loop through parameter options, testing each
 def test_valid_steps(steps):
-    test_params: Dict[str, Any] = VALID_BASE.copy() # create a copy of the valid base...
-    test_params.update({"steps": steps}) # and swap in the parameter being tested
+    test_params: Dict[str, Any] = VALID_BASE.copy()  # create a copy of the valid base...
+    test_params.update({"steps": steps})  # and swap in the parameter being tested
     validate_inputs(**test_params)
 
 @pytest.mark.parametrize("steps", INVALID_STEPS)
@@ -63,7 +63,7 @@ def test_valid_rule_strings(rule_string):
 
 @pytest.mark.parametrize("rule_string", INVALID_RULE_STRINGS)
 def test_invalid_rule_strings(rule_string):
-    with pytest.raises((TypeError, ValueError, Warning)): # warning when 9 in rule
+    with pytest.raises((TypeError, ValueError, Warning)):  # warning when 9 in rule
         test_params: Dict[str, Any] = VALID_BASE.copy()
         test_params.update({"rule_string": rule_string})
         validate_inputs(**test_params)

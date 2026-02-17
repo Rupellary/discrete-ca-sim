@@ -93,7 +93,7 @@ class CellularAutomaton:
             self.grid_state, 
             neighbor_count_kernel, 
             mode="same",
-            boundary="wrap" # results in toroidal topology
+            boundary="wrap"  # results in toroidal topology
         )
         return neighbor_counts
 

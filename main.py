@@ -37,7 +37,7 @@ def main(
         str,
         typer.Option(
             "--start",
-            help=start_options_desc  #next to starting states dict in starting_states.py
+            help=start_options_desc  # next to starting states dict in starting_states.py
         )
     ] = "random_choice",
     update_rate: Annotated[
