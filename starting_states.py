@@ -1,13 +1,12 @@
 import numpy as np
 import time
-from typing import Dict, Tuple
-from numpy.random import Generator
+from typing import Dict
+
+from state_generator import generate_random_state
 
 
 def get_start(
-    start_choice: str,
-    rng: Generator,
-    shape_of_random: Tuple[int] = (18, 18),
+    start_choice: str
 ) -> np.ndarray:
     """
     Uses global dictionary of starting states START_OPTIONS to fetch the corresponding starting grid state numpy array.
@@ -18,16 +17,11 @@ def get_start(
     start_choice : str
         String corresponding with starting state selection. 
         May either be a key from the START_OPTIONS dict, "randomize", or "random_choice".
-    rng: numpy.random.Generator
-        Generator for fixing randomized start. Does not make random choice determinstic as this can already be done with manual selection.
-    shape_of_random : iterable of shape (2,)
-        Only used when start_choice=="randomize".
-        The shape of the randomly generated array.
-    
+
     Returns
     ----------
     start : np.ndarray
-        Binary numpy array to use as starting state for simulation
+        Binary numpy array to use as starting state for simulation.
     """
 
     # Concatenate into full list of options
@@ -42,7 +36,7 @@ def get_start(
     
     # Randomly generate binary grid
     if start_choice == "randomize":
-        start: np.ndarray = rng.integers(0, 2, size=shape_of_random)
+        start: np.ndarray = generate_random_state()
 
     # Lookup in dictionary
     elif start_choice in START_OPTIONS.keys():

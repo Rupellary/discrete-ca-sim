@@ -80,7 +80,7 @@ def main(
     update_rate : float
         Probability that a cell will update at each step. Values less than 1 result in asynchronous CA.
     seed : int or None
-        For asychronous CA and start_choice="randomized". Seed to fix randomization for reproducibility. If None rng will not be fixed.
+        For asychronous CA. Seed to fix randomization for reproducibility. If None rng will not be fixed.
     seconds_per_step : float
         Number of seconds between steps of the animation.
 
@@ -109,12 +109,11 @@ def main(
     birth_set: set = set(map(int, birth_str))
 
     # --- Retrieving Starting State ---
-    # Initialize RNG for determinism. Only applies when start_choice=="randomized" or update_rate < 1.0
-    rng: Generator = np.random.default_rng(seed)
-    # Retrieve or generate starting state according to choice
-    start: np.ndarray = get_start(start_choice, rng)
+    start: np.ndarray = get_start(start_choice)
 
     # --- Initializing CA with Starting State and Rule Sets ---
+    # Initialize RNG for determinism with asynchonous CA
+    rng: Generator = np.random.default_rng(seed)
     ca: CellularAutomaton = CellularAutomaton(
         grid_state=start,
         survive_set=survive_set,
