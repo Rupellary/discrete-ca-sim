@@ -1,6 +1,7 @@
 # discrete-ca-sim
 Python app for visualizing a parameterized version of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Written for the CAS502: Computation course at ASU.
 
+
 ## Project Description
 This project aims to create a small app for exploring discrete cellular automata dynamics through visualization of a user-controlled update rule. The app will be designed to mimic Conway’s Game of Life while parameterizing aspects of the update rule to allow for exploration of their impacts on the dynamics. 
 
@@ -17,14 +18,17 @@ These two sets are alterable by the user in the CLI, allowing them to probe the 
 As the starting state also has a profound effect on the ensuing behavior, the user also has a series of starting states to choose from when running the simulation.
 As the CA rolls out over several steps, the state of the grid after each update step is displayed in the terminal to give a window into the system’s dynamics.
 
+
 ## Author
 Rockwell Gulassa
 
 
 # User Guide
 
+
 ## Installation
 Follow these steps to set the app up on your local machine:
+
 
 ### 1. Clone the repository
 Open your terminal and navigate to the directory where you want to install the app. Then run the following to download it:
@@ -49,6 +53,7 @@ pip install -r requirements.txt
 ```
 Now you should be set up to start running the application.
 
+
 ## Usage
 From the root directory you can run the app from the command line with the following:
 ```
@@ -62,7 +67,7 @@ This will run it with the default parameter settings which uses the Game of Life
 | `-r`, `--rule`           | str   | "S23B3"         | CA update rule. [See below](#rule-specification-syntax) for more details on the notation. |
 | `--start`                | str   | "random_choice" | Choice of starting state for the simulation. [See below](#starting-state-options) for more details on the options. |
 | `-ur`, `--update_rate`   | float | 1.0             | For asynchronous CA. Values less than 1 result in stochastic updating where cells have this probability of updating at each step. |
-| `-sd`, `--seed`          | int   | `None`          | Random seed for determinsitic randomization. Affects randomly generated starting states and asynchronous updating but not start="random_choice" as this can can already be fixed with manual selection. |
+| `-sd`, `--seed`          | int   | `None`          | Random seed for determinsitic randomization. Only affects asynchronous updating.Randomly generated starting states are fixed through later user input ([See below](#randomly-generated-starting-states) for more details). |
 | `-sps`, `--sec-per-step` | float | 0.3             | Seconds between steps while animating. Smaller values speed up the animation. |
 
 
@@ -89,14 +94,16 @@ To set an update rule for the cellular automaton, you can pass in a string that 
 * Any redundant digits are silently ignored; e.g. "S233B33" == "S23B3"
 * Empty sets are allowed; e.g. "SB04"
 
+
 ### Starting State Options
+
 There are a variety of options that can be selected for the starting state of the CA rollout, each of which provide a different window into the rule's dynamics. 
 
 #### `--start random_choice`
 This is the default option, it randomly selects from the other options. 
 
 #### `--start randomize`
-Randomly generates the starting state. In the current version, all cells have an equal probability of being on or off. In future versions this probability may be under user control.
+Randomly generates the starting state after prompting user for additional specifications. [See below](#randomly-generated-starting-states) for more details.
 
 <p align="center">
   <img src="docs/assets/randomize.svg" width="50%" alt="Image of 'randomize' starting state">
@@ -154,3 +161,14 @@ The ["Glider"](https://en.wikipedia.org/wiki/Glider_(Conway%27s_Game_of_Life)) i
   <img src="docs/assets/checkered.svg" width="50%" alt="Image of 'checkered' starting state">
 </p>
 
+
+### Randomly Generated Starting States
+
+If you select "randomize" for the starting state, a starting state will be randomly generated on the fly. Before generating, however, the app will ask for some additional specifications to be provided through prompts in the command line:
+
+1. The width of the grid.
+2. The height of the grid.
+3. The probability each cell has of being "alive". Using lower values will make the starting state more sparse, while using higher values will result in starting states where most of the cells are already "alive".
+4. A random seed to make the generation deterministic for reproducibility. Make sure you remember what you input if you want to try running it with the same starting state again.
+
+Rather than throwing errors, if the user accidentally inputs something invalid when answering these prompts, the app notifies the user and asks for a new input.
