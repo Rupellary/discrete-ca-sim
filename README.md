@@ -174,6 +174,60 @@ If you select "randomize" for the starting state, a starting state will be rando
 Rather than throwing errors, if the user accidentally inputs something invalid when answering these prompts, the app notifies the user and asks for a new input.
 
 
+### Try These Out!
+
+Looking for somewhere to start? Here are a few settings that result in interesting behavior:
+
+These are some classic Game of Life examples:
+```
+python main.py -s 100 --rule S23B3 --start gliders -sps 0.1
+python main.py -s 100 -r S23B3 --start oscillator -ur 1.0 -sps 0.1
+```
+
+Here we can see a bit of what happens when we make the Game of Life rule asynchronous:
+```
+python main.py -s 100 -r S23B3 --start block -ur 0.6 -sd 42 -sps 0.05
+```
+
+Here we generate a randomized state and use a whole new rule. Make sure you answer the follow up prompts the same to replicate the simulation.
+```
+python main.py -s 300 -r S12B345 --start randomize -ur 0.3 -sd 42 -sps 0.05 
+Width: 30
+Height: 30
+"Alive" Probability: 0.1
+Seed: 42
+```
+
+This one forms an interesting crystaline structure. Try changing the starting state seed!
+```
+python main.py -s 300 -r S1238B12378 --start randomize -ur 0.2 -sd 42 -sps 0.05 
+Width: 40
+Height: 40
+"Alive" Probability: 0.001
+Seed: 42
+```
+
+This rule feels a bit alive although it seems to tend towards gradual decay:
+```
+python main.py -s 300 -r S5B27 --start randomize -ur 0.25 -sd 42 -sps 0.05      
+Width: 40
+Height: 40
+"Alive" Probability: 0.3
+Seed: 42
+```
+
+This one has an interesting mix of regions of stability and regions of activity:
+```
+python main.py -s 300 -r S12B357 --start randomize -ur 0.2 -sd 42 -sps 0.05     
+Width: 40
+Height: 40
+"Alive" Probability: 0.15
+Seed: 42
+```
+
+Try changing things and see what kinds of behaviors you can get! Let me know if you find some other interesting settings and I can add them to this list.
+
+
 ## Reporting Bugs and Requesting Features
 
 
@@ -218,8 +272,18 @@ Follow these steps:
 5. Create a pull request with your fork and link it to the issue you just created.
 
 
-### Comments
+### Unit Testing
 
+The `tests/` folder has a variety of unit tests. These can be run with the following command when the project root is the working directory:
+```
+python -m pytest
+```
+Note that simply running `pyest` will result in `ModuleNotFoundError`s. 
+
+
+### Style Conventions
+
+#### Comments
 Comments follow gramatical patterns:
 1. When using headers to group chunks of code together comments follow this pattern: `# --- <title case noun phrase> ---`. For example: `# --- Generating Random Starting States ---`
 2. When using comments on a line by line basis, they switch to the imperative mood. For example: `# Generate random starting state`
@@ -229,14 +293,10 @@ Comments follow gramatical patterns:
 
 Comments should focus on explaining the step of logic being implemented in the code, and if needed clarify the role that step plays in the larger goal this code fits into, rather than simply describing how the code will execute.
 
-
-### Docstrings
-
+#### Docstrings
 Docstrings follow the numpy format and should be included with all functions. 
 
-
-### Type Hinting
-
+#### Type Hinting
 For a variety of reasons, type hinting is being used excessively. Any time a variable is being assigned and a type hint is possible it should be included. 
 
 However, if type hinting would require some bit of refactoring it is only requested if the type is truly vague (for instance, the output from a function assigned to a variable whose name does not fully disambiguate the type). As long as it is clear through comments or otherwise, you can, for instance, assign multiple variables at once even though it prohibits type hinting, and do not need extra lines initializing variables purely for the sake of type hints. 
@@ -245,9 +305,7 @@ Type hints should always be used for function parameters, function outputs, and 
 
 Rule of thumb: use type hints as much as possible, unless it truly comes at a cost that is greater than the reward.
 
-
-### Other Style Choices
-
+#### Other Style Choices
 * Always use double quotes (`"<string>"`) for strings instead of single quotes (`'<string>'`).
 * Separate imports from other files from imports from libraries etc. with one line break.
 * ...
