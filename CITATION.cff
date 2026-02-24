@@ -4,6 +4,7 @@ authors:
 - family-names: "Gulassa"
   given-names: "Rockwell"
 title: "Discrete Cellular Automata CLI Simulator"
-version: "0.1.1"
+version: "1.0"
 date-released: 2026-02-24
+doi: 10.5281/zenodo.18758302
 url: "https://github.com/Rupellary/discrete-ca-sim"
