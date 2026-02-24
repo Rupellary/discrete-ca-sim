@@ -1,23 +1,21 @@
-# discrete-ca-sim
+# Discrete Cellular Automata Simulator
 Python app for visualizing a parameterized version of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Written for the CAS502: Computation course at ASU.
 
 
 ## Project Description
-This project aims to create a small app for exploring discrete cellular automata dynamics through visualization of a user-controlled update rule. The app will be designed to mimic Conway’s Game of Life while parameterizing aspects of the update rule to allow for exploration of their impacts on the dynamics. 
+Discrete Cellular Automata Simulator is a python application for exploring discrete cellular automata dynamics through visualization of a user-controlled update rule. The app is designed to mimic Conway’s Game of Life while parameterizing various aspects of the system to allow for exploration of their impacts on the dynamics. 
 
-Cellular Automata are a computational phenomenon used to study a variety of concepts in Complex Adaptive Systems Science including emergence, decentralized coordination, and computation. The most famous Cellular Automata, which this app is based on, is Conway’s Game of Life. It works by first instantiating a grid of binary values, 1s corresponding conceptually with “living cells” and 0s corresponding with “dead cells.” A rule is defined for how cells update their state over time based solely on their current state and the count of living neighbors (the eight neighbors in their 3x3 neighborhood). The rule is then applied iteratively to the grid of values, sometimes resulting in interesting patterns and emergent capabilities as cells interact with their neighbors and turn on and off. 
+Cellular Automata are a computational phenomenon used to study a variety of concepts in Complex Adaptive Systems Science including emergence, decentralized coordination, and computation. The most famous Cellular Automata, which this app is based on, is Conway’s Game of Life. It works by first instantiating a grid of binary values, 1s corresponding conceptually with “living cells” and 0s corresponding with “dead cells.” A rule is then defined for how cells update their state over time based solely on their current state and the count of living neighbors (the eight neighbors in their 3x3 neighborhood). This rule is then applied iteratively to the grid of values, sometimes resulting in interesting patterns and emergent capabilities as cells interact with their neighbors and turn on and off. 
 
 The update rule for Conway’s Game of Life can be decomposed into two sets:
-1. For living cells: which counts (0-8) of living neighbors result in the cell staying alive. This is referred to in the code as the survival_set.
-2. For dead cells: which counts (0-8) of living neighbors result in the cell becoming alive. This is referred to in the code as the birth_set.
-
-For Conway's Game of Life the rule is: survival_set={2, 3}, birth_set={3}.
-These sets are denoted with the convention S<digits>B<digits>. For example "S23B3".
+1. For living cells: which counts (0-8) of living neighbors result in the cell staying alive. This is referred to in the code as the `survival_set`.
+2. For dead cells: which counts (0-8) of living neighbors result in the cell becoming alive. This is referred to in the code as the `birth_set`.
 
 These two sets are alterable by the user in the CLI, allowing them to probe the system to try to get a sense of the influence these parameters have over the dynamics of the system. 
-As the starting state also has a profound effect on the ensuing behavior, the user also has a series of starting states to choose from when running the simulation.
-As the CA rolls out over several steps, the state of the grid after each update step is displayed in the terminal to give a window into the system’s dynamics.
 
+As the starting state also has a profound effect on the ensuing behavior, the user also has a series of starting states to choose from when running the simulation and even the option to randomly generate new states. Additional parameters have been incorporated for further control and experimentation. You can explore the full list of parameters [below](#usage).
+
+As the CA rolls out over several steps, the state of the grid after each update step is displayed in the terminal to give a window into the system’s dynamics.
 
 ## Author
 Rockwell Gulassa
@@ -70,10 +68,14 @@ This will run it with the default parameter settings which uses the Game of Life
 | `-sd`, `--seed`          | int   | `None`          | Random seed for determinsitic randomization. Only affects asynchronous updating.Randomly generated starting states are fixed through later user input ([See below](#randomly-generated-starting-states) for more details). |
 | `-sps`, `--sec-per-step` | float | 0.3             | Seconds between steps while animating. Smaller values speed up the animation. |
 
+You can also run the following command for guidance within the CLI so you don't have to come back to the README.md to see what the parameters are:
+```
+python main.py --help
+```
 
 ### Rule Specification Syntax
 
-As mentioned in the project description, this application keeps the core logic of Conway's Game of Life, namely that cells can either be on or off, "alive" or "dead", and at each step they change their state based solely on:
+As mentioned in the [project description](#project-description), this application keeps the core logic of Conway's Game of Life, namely that cells can either be on or off, "alive" or "dead", and at each step they change their state based solely on:
 
 1. The count of "alive" cells out of the 8 in their 3x3 neighborhood.
 2. Their own current state as "alive" or "dead."
@@ -85,7 +87,7 @@ But the application generalizes the specific state transition conditions. These 
 
 With these two sets specified, all possible state transitions can be infered.
 
-To set an update rule for the cellular automaton, you can pass in a string that specifies these two sets following the pattern "S<survive-set-digits>B<birth-set-digits>". For example, Conway's Game of Life follows the rule that living cells only survive when they have exactly 2 or 3 living neighbors and dead cells only become alive if they have exactly 2 living neighbors. This can be expressed with this pattern as "S23B3". 
+To set an update rule for the cellular automaton, you can pass in a string that specifies these two sets following the pattern "S<survive-set-digits>B<birth-set-digits>". For example, Conway's Game of Life follows the rule that living cells only survive when they have exactly 2 or 3 living neighbors and dead cells only become alive if they have exactly 3 living neighbors. This can be expressed with this pattern as "S23B3". 
 
 #### Input Validation
 * No other characters are allowed, the string must match the regex pattern `"^S\d*B\d*$"`
@@ -164,7 +166,7 @@ The ["Glider"](https://en.wikipedia.org/wiki/Glider_(Conway%27s_Game_of_Life)) i
 
 ### Randomly Generated Starting States
 
-If you select "randomize" for the starting state, a starting state will be randomly generated on the fly. Before generating, however, the app will ask for some additional specifications to be provided through prompts in the command line:
+If you input "randomize" for the starting state, a starting state will be randomly generated on the fly. Before generating, however, the app will ask for some additional specifications to be provided through prompts in the command line:
 
 1. The width of the grid.
 2. The height of the grid.
@@ -234,25 +236,23 @@ Try changing things and see what kinds of behaviors you can get! Let me know if 
 ### Reporting Bugs
 
 To report a bug, follow these steps:
-1. Double check you have properly followed the installation and usage instructions
-2. Try to reproduce the bug in as few steps as possible
-3. Open an issue on GitHub
+1. Double check you have properly followed the installation and usage instructions.
+2. Try to reproduce the bug in as few steps as possible.
+3. Open an issue on GitHub.
 4. In the issue write...
-  i. How to reproduce the bug
-  ii. What you expected to happen
-  iii. What actually happened
-  iv. Any helpful screenshots
-  v. Details on what versions of the used packages you have installed (they should match what is in the installation instructions) and the OS you are running
-  vi. What version of this app you are running
-5. Select the label "user-reported-bug" in the issue labels
+  i. How to reproduce the bug.
+  ii. What you expected to happen.
+  iii. What actually happened.
+  iv. Any helpful screenshots.
+  v. Details on what versions of the used packages you have installed (they should match what is in the installation instructions) and the OS you are running.
+  vi. What version of this app you are running.
 
 
 ### Requesting Features
 
 To request a feature, follow these steps:
-1. Open an issue on GitHub 
-2. Describe the functionality you would like the app to have
-3. Select the label "user-requested-feature" in the issue labels
+1. Open an issue on GitHub.
+2. Describe the functionality you would like the app to have.
 
 
 ## Contributing
@@ -268,7 +268,7 @@ Follow these steps:
 1. Fork the repository
 2. Create a branch following the established [branch naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=1.%20Branch%20Naming%20Conventions), e.g. `git checkout -b feat/feature-name`.
 3. Make commits following the established [commit naming conventions](https://medium.com/@mandolkarmakarand94/git-branch-naming-and-commit-best-practices-cheatsheet-875316b9ca20#:~:text=2.%20Writing%20Meaningful%20Commits) as much as possible, e.g. `git commit -m "fix: ..."`
-4. Open an issue on GitHub describing what your feature adds. Make sure you add the label "user-created-feature" to the issue.
+4. Open an issue on GitHub describing what your feature adds.
 5. Create a pull request with your fork and link it to the issue you just created.
 
 
@@ -291,7 +291,7 @@ Comments follow gramatical patterns:
 4. Comments do not end with periods
 5. Occassionally, if helpful, subheadings can be used with one less hyphen. For example: `# -- <title case noun phrase> --`
 
-Comments should focus on explaining the step of logic being implemented in the code, and if needed clarify the role that step plays in the larger goal this code fits into, rather than simply describing how the code will execute.
+Comments should focus on explaining the step of logic being implemented in the code, and, if needed, clarify the role that step plays in the larger goal this code fits into, rather than simply describing how the code will execute.
 
 #### Docstrings
 Docstrings follow the numpy format and should be included with all functions. 
@@ -311,3 +311,8 @@ Rule of thumb: use type hints as much as possible, unless it truly comes at a co
 * ...
 
 In general, if you want to help maximize style consistency, you can look for existing code that does something similar to what you are trying to do and check for style patterns in the existing codebase.
+
+
+## License
+
+This project is licensed under the GLP v3 License. See the LICENSE file for details.
